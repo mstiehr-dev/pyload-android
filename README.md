@@ -14,3 +14,6 @@ more details to follow soon.
 v0.1.1	MD5: 5265e2a445d31a8d81117896ab26f75a (download link coming soon)
 
 more details to follow soon. 
+
+## todo
+* application crashes when displaying captcha, if device orientation switched before 
