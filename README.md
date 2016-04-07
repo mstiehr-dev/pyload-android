@@ -7,4 +7,4 @@ Main goals are:
 - provide notification when user interaction is necessary
 - provide APK via file hoster
 
-more details wil follow soon. 
+more details to follow soon. 
