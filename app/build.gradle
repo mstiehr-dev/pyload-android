@@ -1,19 +1,32 @@
 apply plugin: 'com.android.application'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    signingConfigs {
+        release {
+            keyAlias 'pyload'
+            keyPassword ''
+            storeFile file('C:/Users/Martin/.android/keystore-mstiehr-dev.jks')
+            storePassword ''
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "org.pyload.android.client"
         minSdkVersion 16
         targetSdkVersion 22
     }
-
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-project.txt'
+            signingConfig signingConfigs.release
         }
     }
 }

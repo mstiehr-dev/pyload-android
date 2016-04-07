@@ -38,13 +38,17 @@ public class ConfigSectionFragment extends Fragment {
     /**
      * Called after settings were saved
      */
-	private final Runnable mRefresh;
+	private Runnable mRefresh;
 
-    public ConfigSectionFragment(Runnable mRefresh) {
-        this.mRefresh = mRefresh;
+    public ConfigSectionFragment() {
     }
 
-    @Override
+	public void setRefresh(Runnable mRefresh)
+	{
+		this.mRefresh = mRefresh;
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 

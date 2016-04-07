@@ -3,6 +3,11 @@ package org.pyload.android.client.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
+import android.widget.ListView;
 import org.pyload.android.client.R;
 import org.pyload.android.client.module.Utils;
 import org.pyload.android.client.pyLoadApp;
@@ -105,6 +110,14 @@ public class OverviewFragment extends ListFragment implements
 
 		downloads = new ArrayList<DownloadInfo>();
 		adp = new OverviewAdapter(app, R.layout.overview_item, downloads);
+
+	}
+
+	@Override
+	public void onListItemClick (ListView l, View v, int position, long id)
+	{
+		//showNotification();
+		super.onListItemClick(l, v, position, id);
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -252,7 +265,7 @@ public class OverviewFragment extends ListFragment implements
 				&& captcha.resultType != null // string null bug
 				&& captcha.resultType.equals("textual")
 				&& lastCaptcha != captcha.tid) {
-			showDialog();
+			showCaptureDialog();
 		}
 
 	}
@@ -267,10 +280,12 @@ public class OverviewFragment extends ListFragment implements
 		app.addTask(task);
 	}
 
-	private void showDialog() {
+	private void showCaptureDialog () {
 
 		if (dialogOpen || captcha == null)
 			return;
+
+		showNotification();
 
 		CaptchaDialog dialog = CaptchaDialog.newInstance(captcha);
 		lastCaptcha = captcha.tid;
@@ -292,6 +307,23 @@ public class OverviewFragment extends ListFragment implements
 			Log.e("pyLoad", "Dialog null pointer error", e);
 		}
 
+	}
+
+	private void showNotification ()
+	{
+		long [] vibratorPattern = { 250, 100, 250, 100, 250, 100, 250, 100, 250, 100 };
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity().getApplicationContext())
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle("new captcha")
+				.setContentText("please resolve captcha")
+//				.setLights()
+				.setVibrate(vibratorPattern);
+		// TODO: 07.04.2016 add led action  
+		// TODO: 07.04.2016 set intent
+
+		// show notification
+		NotificationManager mNotifyMgr = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotifyMgr.notify(1337, mBuilder.build());
 	}
 
 	public void onDismiss(DialogInterface arg0) {
@@ -414,5 +446,6 @@ class OverviewAdapter extends BaseAdapter {
 	public boolean hasStableIds() {
 		return false;
 	}
+
 
 }

@@ -118,7 +118,8 @@ public class SettingsFragment extends ListFragment {
 			args.putString("type", "core");
 		args.putSerializable("section", item.getValue());
 
-		Fragment f = new ConfigSectionFragment(mRefresh);
+		ConfigSectionFragment f = new ConfigSectionFragment();
+		f.setRefresh(mRefresh);
 		f.setArguments(args);
 
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
