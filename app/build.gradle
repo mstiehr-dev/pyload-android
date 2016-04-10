@@ -11,7 +11,7 @@ android {
         release {
             keyAlias 'pyload'
             keyPassword System.getenv("KEYPWD")
-            storeFile file('C:/Users/Martin/.android/keystore-mstiehr-dev.jks')
+            storeFile file(System.getenv("KEYSTOREPATH"))
             storePassword System.getenv("KEYSTOREPWD")
         }
     }
