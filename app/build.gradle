@@ -10,9 +10,9 @@ android {
     signingConfigs {
         release {
             keyAlias 'pyload'
-            keyPassword ''
+            keyPassword System.getenv("KEYPWD")
             storeFile file('C:/Users/Martin/.android/keystore-mstiehr-dev.jks')
-            storePassword ''
+            storePassword System.getenv("KEYSTOREPWD")
         }
     }
     compileSdkVersion 22
