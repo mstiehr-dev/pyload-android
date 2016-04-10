@@ -12,9 +12,9 @@ more details to follow soon.
 
 ## first release 
 v0.1.1	
-- Download: https://www.androidfilehost.com/?fid=24459283995315969
-- MD5: 5265e2a445d31a8d81117896ab26f75a
-- SHA1: 741A06B6EF913D7560B9AD7C378F90E1DE8DE4F2
+- Download: https://www.androidfilehost.com/?fid=24459283995317314
+- MD5: 3fc6fb561ee0017a429f1b4afb843799
+- SHA1: 678BF27EA2C838F0CB0D53DE841E53BD02F7C1EA
 
 
 ## todo
