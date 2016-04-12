@@ -18,4 +18,4 @@ v0.1.1
 
 
 ## todo
-* application crashes when displaying captcha, if device orientation switched before 
+* check in background if pyload is busy and notify user, when queue is empty
