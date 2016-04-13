@@ -17,6 +17,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
 import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.thrift.TException;
@@ -43,6 +46,17 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
+@ReportsCrashes(
+		formUri = "https://maltin.pisces.uberspace.de/couchdb/acra-pyload/_design/acra-storage/_update/report",
+		reportType = org.acra.sender.HttpSender.Type.JSON,
+		httpMethod = org.acra.sender.HttpSender.Method.PUT,
+		formUriBasicAuthLogin="mstiehr",
+		formUriBasicAuthPassword="mstiehr",
+		excludeMatchingSharedPreferencesKeys = {"host", "password", "port", "username"},
+		// Your usual ACRA configuration
+		mode = ReportingInteractionMode.TOAST,
+		resToastText = R.string.crash_toast_text
+)
 public class pyLoadApp extends Application {
 
 	private Client client;
@@ -320,4 +334,10 @@ public class pyLoadApp extends Application {
         return android.os.Build.VERSION.SDK_INT >= 11;
     }
 
+	@Override
+	public void onCreate ()
+	{
+		super.onCreate();
+		ACRA.init(this);
+	}
 }
