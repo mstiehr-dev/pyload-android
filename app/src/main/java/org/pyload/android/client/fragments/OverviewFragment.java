@@ -125,7 +125,9 @@ public class OverviewFragment extends ListFragment implements
     {
         if(BuildConfig.DEBUG)
         {
-            showNotification(getContext(), R.string.abort);
+            if(BuildConfig.DEBUG && 2>1)
+                throw new NullPointerException();
+            //     showNotification(getContext(), R.string.abort);
         }
         super.onListItemClick(l, v, position, id);
     }

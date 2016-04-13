@@ -54,8 +54,12 @@ import android.widget.Toast;
 		formUriBasicAuthPassword="mstiehr",
 		excludeMatchingSharedPreferencesKeys = {"host", "password", "port", "username"},
 		// Your usual ACRA configuration
-		mode = ReportingInteractionMode.TOAST,
-		resToastText = R.string.crash_toast_text
+		mode = ReportingInteractionMode.DIALOG,
+		resDialogText = R.string.crash_dialog,
+		resDialogIcon = android.R.drawable.ic_dialog_info, //optional. default is a warning sign
+		resDialogTitle = R.string.app_name, // optional. default is your application name
+		resDialogOkToast = R.string.crash_toast_text // optional. displays a Toast message when the user accepts to send a report.
+//		resToastText = R.string.crash_toast_text
 )
 public class pyLoadApp extends Application {
 
@@ -66,6 +70,7 @@ public class pyLoadApp extends Application {
 	private Throwable lastException;
 	public SharedPreferences prefs;
 	public ConnectivityManager cm;
+	public boolean manualUpdateCheck = false;
 
 	private pyLoad main;
 

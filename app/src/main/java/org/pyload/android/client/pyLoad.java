@@ -9,15 +9,20 @@ import java.util.Locale;
 
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.*;
 import org.pyload.android.client.components.FragmentTabsPager;
 import org.pyload.android.client.components.TabHandler;
+import org.pyload.android.client.data.UpdateInfo;
 import org.pyload.android.client.dialogs.AccountDialog;
 import org.pyload.android.client.fragments.CollectorFragment;
 import org.pyload.android.client.fragments.OverviewFragment;
 import org.pyload.android.client.fragments.QueueFragment;
 import org.pyload.android.client.module.Eula;
 import org.pyload.android.client.module.GuiTask;
+import org.pyload.android.client.network.UpdateInfoLoader;
+import org.pyload.android.client.util.UpdateUtil;
 import org.pyload.thrift.Destination;
 import org.pyload.thrift.PackageDoesNotExists;
 import org.pyload.thrift.Pyload.Client;
@@ -33,13 +38,15 @@ import android.util.Log;
 import android.widget.TabHost;
 import android.support.v4.view.MenuItemCompat;
 
-public class pyLoad extends FragmentTabsPager
+public class pyLoad extends FragmentTabsPager implements LoaderManager.LoaderCallbacks<UpdateInfo>
 {
 
     private pyLoadApp app;
 
     // keep reference to set indeterminateProgress
     private MenuItem refreshItem;
+
+    public static UpdateUtil updateUtil;
 
     /**
      * Called when the activity is first created.
@@ -92,6 +99,8 @@ public class pyLoad extends FragmentTabsPager
         spec = mTabHost.newTabSpec(title).setIndicator(title,
                 res.getDrawable(tab_collector));
         mTabsAdapter.addTab(spec, CollectorFragment.class, null);
+        updateUtil = UpdateUtil.getInstance(this);
+        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
     }
 
     @Override
@@ -136,6 +145,7 @@ public class pyLoad extends FragmentTabsPager
     {
         super.onResume();
         app.refreshTab();
+        updateUtil.setActivity(this);
     }
 
     @Override
@@ -185,6 +195,14 @@ public class pyLoad extends FragmentTabsPager
             case R.id.show_accounts:
                 AccountDialog accountsList = new AccountDialog();
                 accountsList.show(getSupportFragmentManager(), "accountsDialog");
+
+                return true;
+
+            case R.id.poll_update:
+
+                // check for update
+                app.manualUpdateCheck = true;
+                getSupportLoaderManager().initLoader(1, null, this).forceLoad();
 
                 return true;
 
@@ -364,5 +382,24 @@ public class pyLoad extends FragmentTabsPager
     public MenuItem getRefreshItem ()
     {
         return refreshItem;
+    }
+
+    @Override
+    public Loader<UpdateInfo> onCreateLoader (int id, Bundle args)
+    {
+        return new UpdateInfoLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished (Loader<UpdateInfo> loader, UpdateInfo data)
+    {
+        if(null != data)
+            updateUtil.evaluate(data);
+    }
+
+    @Override
+    public void onLoaderReset (Loader<UpdateInfo> loader)
+    {
+        // do nothing
     }
 }

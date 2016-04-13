@@ -28,8 +28,13 @@
         android:title="@string/remote_settings" />
 
     <item
-        android:id="@+id/restart_failed"
-        android:icon="@drawable/ic_menu_restart"
-        android:title="@string/restart_failed" />
+            android:id="@+id/restart_failed"
+            android:icon="@drawable/ic_menu_restart"
+            android:title="@string/restart_failed" />
+
+    <item
+            android:id="@+id/poll_update"
+            android:icon="@drawable/ic_menu_restart"
+            android:title="@string/poll_update" />
 
 </menu>
