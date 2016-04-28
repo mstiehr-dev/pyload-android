@@ -108,8 +108,7 @@ public class UpdateUtil
         }
 
         int current = BuildConfig.VERSION_CODE;
-        if(BuildConfig.DEBUG)
-            current = 1;
+
         if(current < info.getVersionCode())
         {
             UpdateDownloadTask task = new UpdateDownloadTask(info);
