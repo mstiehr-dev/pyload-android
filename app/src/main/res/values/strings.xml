@@ -10,6 +10,7 @@
     <string name="no_accounts">No premium accounts.</string>
     <string name="no_downloads">No active downloads.</string>
     <string name="download_finished">Download finished</string>
+    <string name="download_almost_finished">Download almost finished</string>
     <string name="captcha_available">Please resolve captcha</string>
     <string name="add_links">Add Links</string>
     <string name="settings">Settings</string>

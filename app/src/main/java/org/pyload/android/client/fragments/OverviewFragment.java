@@ -52,6 +52,8 @@ public class OverviewFragment extends ListFragment implements
     private int interval = 5;
     private boolean update = false;
     private boolean dialogOpen = false;
+    private DownloadInfo dl_soon_finished;
+
     // tab position
     private int pos = -1;
 
@@ -294,10 +296,13 @@ public class OverviewFragment extends ListFragment implements
 
         adapter.setDownloads(downloads);
 
-        if(null == downloads || 0 == downloads.size())
-        {   // now downloads active
-            showNotification(getContext(), R.string.download_finished);
-            return;
+        for(DownloadInfo info : downloads)
+        {
+            if(info.eta<=120 && !info.equals(dl_soon_finished))
+            {
+                dl_soon_finished = info; // prevent recurring notifications
+                showNotification(getContext(), R.string.download_almost_finished); // notify about soon completion
+            }
         }
 
         statusServer.setText(app.verboseBool(status.download));
